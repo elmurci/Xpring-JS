@@ -39,6 +39,7 @@ export default class XpringClient {
     amount: BigInteger | number | string,
     destinationPayID: string,
     sender: Wallet,
+    memo: string,
   ): Promise<string> {
     // Resolve the destination address to an XRP address.
     const destinationAddress = await this.payIDClient.xrpAddressForPayID(
@@ -46,6 +47,6 @@ export default class XpringClient {
     )
 
     // Transact XRP to the resolved address.
-    return this.xrpClient.send(amount, destinationAddress, sender)
+    return this.xrpClient.send(amount, destinationAddress, sender, memo)
   }
 }

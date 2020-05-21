@@ -42,6 +42,7 @@ export default interface XRPClientInterface {
     amount: BigInteger | number | string,
     destination: string,
     sender: Wallet,
+    memo: string,
   ): Promise<string>
 
   /**

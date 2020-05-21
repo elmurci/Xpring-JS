@@ -13,10 +13,14 @@ import {
   Account,
   LastLedgerSequence,
   SigningPublicKey,
+  MemoData,
+  MemoFormat,
+  MemoType,
 } from './Generated/node/org/xrpl/rpc/v1/common_pb'
 import {
   Payment,
   Transaction,
+  Memo,
 } from './Generated/web/org/xrpl/rpc/v1/transaction_pb'
 import { AccountAddress } from './Generated/web/org/xrpl/rpc/v1/account_pb'
 import { GetFeeResponse } from './Generated/web/org/xrpl/rpc/v1/get_fee_pb'
@@ -142,6 +146,7 @@ class DefaultXRPClient implements XRPClientDecorator {
     drops: BigInteger | number | string,
     destinationAddress: string,
     sender: Wallet,
+    memo: string,
   ): Promise<string> {
     if (!Utils.isValidXAddress(destinationAddress)) {
       throw XRPError.xAddressRequired
@@ -189,6 +194,21 @@ class DefaultXRPClient implements XRPClientDecorator {
     const signingPublicKeyBytes = Utils.toBytes(sender.getPublicKey())
     const signingPublicKey = new SigningPublicKey()
     signingPublicKey.setValue(signingPublicKeyBytes)
+
+    const memoFormat = new Uint8Array([3, 6, 9])
+    const memoType = new Uint8Array([3, 2, 1])
+
+    const memoDataProto = new MemoData()
+    memoDataProto.setValue(memo)
+    const memoFormatProto = new MemoFormat()
+    memoFormatProto.setValue(memoFormat)
+    const memoTypeProto = new MemoType()
+    memoTypeProto.setValue(memoType)
+
+    const testMemoProtoAllFields = new Memo()
+    testMemoProtoAllFields.setMemoData(memoDataProto)
+    testMemoProtoAllFields.setMemoFormat(memoFormatProto)
+    testMemoProtoAllFields.setMemoType(memoTypeProto)
 
     const transaction = new Transaction()
     transaction.setAccount(account)

@@ -38,6 +38,7 @@ export interface XRPClientDecorator {
     amount: BigInteger | number | string,
     destination: string,
     sender: Wallet,
+    memo: string,
   ): Promise<string>
 
   /**

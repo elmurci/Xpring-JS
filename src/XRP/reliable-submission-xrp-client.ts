@@ -31,6 +31,7 @@ class ReliableSubmissionXRPClient implements XRPClientDecorator {
     amount: string | number | BigInteger,
     destination: string,
     sender: Wallet,
+    memo: string,
   ): Promise<string> {
     const ledgerCloseTimeMs = 4 * 1000
 
@@ -39,6 +40,7 @@ class ReliableSubmissionXRPClient implements XRPClientDecorator {
       amount,
       destination,
       sender,
+      memo,
     )
     await sleep(ledgerCloseTimeMs)
 
