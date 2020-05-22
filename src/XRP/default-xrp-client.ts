@@ -205,10 +205,10 @@ class DefaultXRPClient implements XRPClientDecorator {
     const memoTypeProto = new MemoType()
     memoTypeProto.setValue(memoType)
 
-    const testMemoProtoAllFields = new Memo()
-    testMemoProtoAllFields.setMemoData(memoDataProto)
-    testMemoProtoAllFields.setMemoFormat(memoFormatProto)
-    testMemoProtoAllFields.setMemoType(memoTypeProto)
+    const memoProtoAllFields = new Memo()
+    memoProtoAllFields.setMemoData(memoDataProto)
+    memoProtoAllFields.setMemoFormat(memoFormatProto)
+    memoProtoAllFields.setMemoType(memoTypeProto)
 
     const transaction = new Transaction()
     transaction.setAccount(account)
@@ -216,6 +216,7 @@ class DefaultXRPClient implements XRPClientDecorator {
     transaction.setSequence(accountData.getSequence())
     transaction.setPayment(payment)
     transaction.setLastLedgerSequence(lastLedgerSequence)
+    transaction.setMemosList([memoProtoAllFields])
 
     transaction.setSigningPublicKey(signingPublicKey)
 
